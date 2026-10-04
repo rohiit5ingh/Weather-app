@@ -1,0 +1,749 @@
+/* Weather Dashboard Main Container */
+.dashboard-container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 32px 24px 64px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    width: 100%;
+    animation: fadeIn 0.4s ease-out;
+}
+
+/* ==========================================================================
+   1. Hero Weather Card
+   ========================================================================== */
+.hero-card {
+    background: var(--card-bg);
+    backdrop-filter: var(--blur-strength);
+    -webkit-backdrop-filter: var(--blur-strength);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--card-shadow);
+    padding: 36px 44px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.hero-card:hover {
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--card-border-hover);
+}
+
+.hero-card::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 380px;
+    height: 380px;
+    background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+}
+
+.hero-left, .hero-right {
+    position: relative;
+    z-index: 1;
+}
+
+.hero-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+    text-align: left;
+}
+
+.location-badge-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.location-city {
+    font-size: 38px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    color: #ffffff;
+    margin: 0;
+    line-height: 1.1;
+}
+
+.country-chip {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    padding: 2px 10px;
+    border-radius: 9999px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+    letter-spacing: 0.5px;
+}
+
+.local-time {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.condition-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    padding: 6px 14px;
+    border-radius: 9999px;
+    margin-top: 8px;
+    backdrop-filter: blur(8px);
+}
+
+.condition-indicator-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: var(--accent-primary);
+    box-shadow: 0 0 8px var(--accent-primary);
+}
+
+.condition-text {
+    font-size: 14px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.temp-range-pill {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--text-secondary);
+    margin-top: 4px;
+}
+
+.range-label {
+    font-weight: 600;
+    color: var(--text-muted);
+}
+
+.range-divider {
+    color: var(--text-muted);
+}
+
+/* Hero Right: Temperature Focus */
+.hero-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 4px;
+    text-align: right;
+}
+
+.weather-icon-container {
+    width: 96px;
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: -12px;
+}
+
+.hero-weather-icon {
+    width: 110px;
+    height: 110px;
+    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.3));
+    animation: pulseSubtle 4s infinite ease-in-out;
+}
+
+.temp-display {
+    display: flex;
+    align-items: flex-start;
+    line-height: 0.9;
+}
+
+.main-temp {
+    font-size: 88px;
+    font-weight: 800;
+    letter-spacing: -3px;
+    color: #ffffff;
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+}
+
+.temp-unit {
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--accent-primary);
+    margin-top: 10px;
+    margin-left: 2px;
+}
+
+.feels-like-pill {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 4px 12px;
+    border-radius: 9999px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    margin-top: 6px;
+}
+
+.feels-like-pill strong {
+    color: #ffffff;
+}
+
+/* ==========================================================================
+   2. 6 Weather Metrics Grid
+   ========================================================================== */
+.metrics-section {
+    width: 100%;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 18px;
+}
+
+.metric-card {
+    background: var(--card-bg);
+    backdrop-filter: var(--blur-strength);
+    -webkit-backdrop-filter: var(--blur-strength);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-md);
+    box-shadow: var(--card-shadow);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 150px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.metric-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--card-shadow-hover);
+    border-color: var(--card-border-hover);
+    background: var(--card-bg-hover);
+}
+
+.metric-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.metric-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.metric-icon-bg {
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.metric-icon {
+    font-size: 18px !important;
+}
+
+.metric-value-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    margin: 8px 0;
+}
+
+.metric-value {
+    font-size: 28px;
+    font-weight: 800;
+    color: #ffffff;
+    line-height: 1;
+}
+
+.metric-unit {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.progress-bar-track {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 9999px;
+    overflow: hidden;
+    margin: 6px 0;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    border-radius: 9999px;
+    transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.metric-status {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.wind-direction-info {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+    margin: 4px 0;
+}
+
+.wind-arrow-icon {
+    font-size: 16px !important;
+    color: var(--accent-primary);
+    transition: transform 0.5s ease;
+}
+
+.metric-subtext {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin: 4px 0;
+}
+
+.sun-schedule-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin: 6px 0;
+}
+
+.sun-item {
+    display: flex;
+    flex-direction: column;
+}
+
+.sun-label {
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+}
+
+.sun-time {
+    font-size: 13px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.sun-divider {
+    width: 1px;
+    height: 24px;
+    background: rgba(255, 255, 255, 0.15);
+}
+
+/* ==========================================================================
+   3. Common Section Headers (Hourly & 5-Day)
+   ========================================================================== */
+.section-block {
+    background: var(--card-bg);
+    backdrop-filter: var(--blur-strength);
+    -webkit-backdrop-filter: var(--blur-strength);
+    border: 1px solid var(--card-border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--card-shadow);
+    padding: 24px 28px;
+    transition: border-color 0.3s ease;
+}
+
+.section-block:hover {
+    border-color: var(--card-border-hover);
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.section-title-wrapper {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.section-header-icon {
+    color: var(--accent-primary);
+    font-size: 22px !important;
+}
+
+.section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0;
+}
+
+.section-subtitle {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+/* ==========================================================================
+   4. Hourly Forecast Section
+   ========================================================================== */
+.hourly-scroll-container {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    overflow-x: auto;
+    padding-bottom: 8px;
+    scroll-snap-type: x mandatory;
+}
+
+.hourly-card {
+    flex: 0 0 115px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: 16px 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    scroll-snap-align: start;
+    transition: all 0.2s ease;
+}
+
+.hourly-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+}
+
+.hourly-time {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.hourly-icon {
+    width: 48px;
+    height: 48px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.25));
+}
+
+.hourly-temp {
+    font-size: 18px;
+    font-weight: 800;
+    color: #ffffff;
+}
+
+.hourly-pop {
+    font-size: 11px;
+    font-weight: 600;
+    color: #38bdf8;
+    background: rgba(56, 189, 248, 0.15);
+    padding: 2px 6px;
+    border-radius: 9999px;
+}
+
+.hourly-condition {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+/* ==========================================================================
+   5. 5-Day Forecast Section
+   ========================================================================== */
+.forecast-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+}
+
+.forecast-card {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius-md);
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    text-align: center;
+    transition: all 0.25s ease;
+}
+
+.forecast-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.forecast-day-date {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.forecast-day-name {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.forecast-date {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.forecast-icon-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.forecast-weather-icon {
+    width: 54px;
+    height: 54px;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+}
+
+.forecast-condition {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.forecast-temp-range {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    gap: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.forecast-max-temp {
+    font-size: 15px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+.forecast-min-temp {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-muted);
+}
+
+.forecast-mini-bar {
+    flex: 1;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 9999px;
+    overflow: hidden;
+}
+
+.forecast-mini-bar-fill {
+    height: 100%;
+    width: 70%;
+    margin: 0 auto;
+    background: linear-gradient(90deg, #38bdf8, #facc15);
+    border-radius: 9999px;
+}
+
+/* ==========================================================================
+   6. Feedback, Empty & Loading Skeletons
+   ========================================================================== */
+.state-card-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 400px;
+}
+
+.feedback-card {
+    max-width: 480px;
+    width: 100%;
+    background: var(--card-bg) !important;
+    backdrop-filter: var(--blur-strength);
+    -webkit-backdrop-filter: var(--blur-strength);
+    border: 1px solid var(--card-border) !important;
+    border-radius: var(--radius-lg) !important;
+    box-shadow: var(--card-shadow) !important;
+    padding: 40px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 16px;
+}
+
+.feedback-icon-wrapper {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.default-glow {
+    background: rgba(56, 189, 248, 0.15);
+    border: 1px solid rgba(56, 189, 248, 0.3);
+    box-shadow: 0 0 24px rgba(56, 189, 248, 0.25);
+}
+
+.error-glow {
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    box-shadow: 0 0 24px rgba(239, 68, 68, 0.25);
+}
+
+.state-icon {
+    font-size: 38px !important;
+    color: var(--accent-primary);
+}
+
+.error-icon-color {
+    color: #f87171 !important;
+}
+
+.state-title {
+    font-size: 22px !important;
+    font-weight: 700 !important;
+    color: #ffffff;
+}
+
+.state-description {
+    font-size: 14px !important;
+    color: var(--text-secondary) !important;
+    line-height: 1.6 !important;
+}
+
+.state-action-btn {
+    background: linear-gradient(135deg, #0284c7 0%, #0369a1 100%) !important;
+    border-radius: 9999px !important;
+    padding: 8px 24px !important;
+    text-transform: none !important;
+    font-weight: 600 !important;
+}
+
+/* Skeleton Rows */
+.forecast-cards-row {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 14px;
+}
+
+.forecast-card-skeleton {
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: var(--radius-md);
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* ==========================================================================
+   7. Responsive Breakpoints
+   ========================================================================== */
+@media (max-width: 1100px) {
+    .metrics-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 840px) {
+    .dashboard-container {
+        padding: 20px 16px 48px;
+        gap: 20px;
+    }
+
+    .hero-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 28px 24px;
+        gap: 24px;
+    }
+
+    .hero-right {
+        align-items: flex-start;
+        text-align: left;
+        width: 100%;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        padding-top: 20px;
+    }
+
+    .weather-icon-container {
+        margin-bottom: 0;
+    }
+
+    .metrics-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+    }
+
+    .forecast-grid {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 8px;
+        scroll-snap-type: x mandatory;
+    }
+
+    .forecast-card {
+        flex: 0 0 140px;
+        scroll-snap-align: start;
+    }
+
+    .forecast-cards-row {
+        display: flex;
+        overflow-x: auto;
+        padding-bottom: 8px;
+    }
+
+    .forecast-card-skeleton {
+        flex: 0 0 140px;
+    }
+}
+
+@media (max-width: 520px) {
+    .location-city {
+        font-size: 30px;
+    }
+
+    .main-temp {
+        font-size: 72px;
+    }
+
+    .metrics-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-block {
+        padding: 20px 16px;
+    }
+}

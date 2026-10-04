@@ -1,0 +1,210 @@
+/* Modern Weather Dashboard Global Design System */
+
+:root {
+  --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  
+  /* Neutral / Fallback Theme */
+  --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+  --card-bg: rgba(255, 255, 255, 0.07);
+  --card-bg-hover: rgba(255, 255, 255, 0.12);
+  --card-border: rgba(255, 255, 255, 0.12);
+  --card-border-hover: rgba(255, 255, 255, 0.25);
+  --card-shadow: 0 12px 32px 0 rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  --card-shadow-hover: 0 16px 40px 0 rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  
+  --text-primary: #ffffff;
+  --text-secondary: rgba(255, 255, 255, 0.75);
+  --text-muted: rgba(255, 255, 255, 0.5);
+  
+  --accent-primary: #38bdf8;
+  --accent-glow: rgba(56, 189, 248, 0.25);
+  --pill-bg: rgba(255, 255, 255, 0.1);
+  --pill-hover: rgba(255, 255, 255, 0.18);
+  
+  --blur-strength: blur(20px);
+  --radius-lg: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
+}
+
+/* Weather Themes */
+.theme-clear-day {
+  --bg-gradient: radial-gradient(circle at 80% 20%, #38bdf8 0%, #0284c7 35%, #0369a1 70%, #0c4a6e 100%);
+  --accent-primary: #facc15;
+  --accent-glow: rgba(250, 204, 21, 0.3);
+  --card-bg: rgba(255, 255, 255, 0.12);
+  --card-bg-hover: rgba(255, 255, 255, 0.18);
+  --card-border: rgba(255, 255, 255, 0.22);
+  --card-border-hover: rgba(255, 255, 255, 0.35);
+}
+
+.theme-clear-night {
+  --bg-gradient: radial-gradient(circle at 75% 15%, #1e1b4b 0%, #0f172a 40%, #090d16 100%);
+  --accent-primary: #818cf8;
+  --accent-glow: rgba(129, 140, 248, 0.3);
+  --card-bg: rgba(255, 255, 255, 0.06);
+  --card-bg-hover: rgba(255, 255, 255, 0.1);
+  --card-border: rgba(255, 255, 255, 0.1);
+  --card-border-hover: rgba(255, 255, 255, 0.2);
+}
+
+.theme-clouds {
+  --bg-gradient: linear-gradient(135deg, #1e293b 0%, #334155 40%, #475569 80%, #334155 100%);
+  --accent-primary: #94a3b8;
+  --accent-glow: rgba(148, 163, 184, 0.25);
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-bg-hover: rgba(255, 255, 255, 0.13);
+  --card-border: rgba(255, 255, 255, 0.14);
+  --card-border-hover: rgba(255, 255, 255, 0.25);
+}
+
+.theme-rain {
+  --bg-gradient: linear-gradient(160deg, #09131f 0%, #0d223a 35%, #112d4e 70%, #0b1d33 100%);
+  --accent-primary: #38bdf8;
+  --accent-glow: rgba(56, 189, 248, 0.3);
+  --card-bg: rgba(255, 255, 255, 0.07);
+  --card-bg-hover: rgba(255, 255, 255, 0.12);
+  --card-border: rgba(255, 255, 255, 0.12);
+  --card-border-hover: rgba(255, 255, 255, 0.22);
+}
+
+.theme-thunderstorm {
+  --bg-gradient: linear-gradient(150deg, #0d091a 0%, #1e1338 40%, #2e1065 70%, #110e20 100%);
+  --accent-primary: #c084fc;
+  --accent-glow: rgba(192, 132, 252, 0.35);
+  --card-bg: rgba(255, 255, 255, 0.07);
+  --card-bg-hover: rgba(255, 255, 255, 0.12);
+  --card-border: rgba(255, 255, 255, 0.12);
+}
+
+.theme-snow {
+  --bg-gradient: linear-gradient(145deg, #0f172a 0%, #1e293b 40%, #1e3a5f 80%, #0f2744 100%);
+  --accent-primary: #bae6fd;
+  --accent-glow: rgba(186, 230, 253, 0.35);
+  --card-bg: rgba(255, 255, 255, 0.09);
+  --card-bg-hover: rgba(255, 255, 255, 0.15);
+  --card-border: rgba(255, 255, 255, 0.16);
+}
+
+.theme-mist {
+  --bg-gradient: linear-gradient(135deg, #182026 0%, #22303c 45%, #2c3e50 85%, #182026 100%);
+  --accent-primary: #cbd5e1;
+  --accent-glow: rgba(203, 213, 225, 0.25);
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-bg-hover: rgba(255, 255, 255, 0.13);
+  --card-border: rgba(255, 255, 255, 0.14);
+}
+
+/* Global Reset & Base */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+  background-color: #0b0f19;
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.weather-app-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  background: var(--bg-gradient);
+  background-attachment: fixed;
+  transition: background 0.8s ease-in-out;
+  display: flex;
+  flex-direction: column;
+}
+
+.app-footer {
+  margin-top: auto;
+  padding: 24px;
+  text-align: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(15, 23, 42, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.footer-text {
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.footer-text span {
+  color: var(--accent-primary);
+  font-weight: 600;
+}
+
+/* Custom Scrollbar for Forecasts */
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.35);
+}
+
+/* Global Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulseSubtle {
+  0%, 100% {
+    opacity: 0.6;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
